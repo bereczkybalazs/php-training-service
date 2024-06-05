@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return $this->product::query()->get();
+        return $this->product->newQuery()->get();
     }
 
     /**
@@ -40,7 +40,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        return $this->product::query()->find($id);
+        return $this->product->newQuery()->find($id);
     }
 
     /**
