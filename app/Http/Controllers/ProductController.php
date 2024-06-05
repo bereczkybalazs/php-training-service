@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct(protected Product $product, protected User $user) {
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Product::query()->get();
+        return $this->product::query()->get();
     }
 
     /**
@@ -36,7 +40,7 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        return Product::query()->find($id);
+        return $this->product::query()->find($id);
     }
 
     /**
