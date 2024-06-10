@@ -2,6 +2,7 @@
 
 namespace Tests\Integration\Controller;
 
+use App\Builders\WonderBuilder;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use App\Models\User;
@@ -23,11 +24,29 @@ class ProductControllerTest extends TestCase
         return new ProductController($productMock, $userMock);
     }
 
-    public function test_index_page() {
+    private function getRequestMock($request){
+        $requestMock = $this->createMock(Request::class);
+        $requestMock->expects($this->once())->method('all')->willReturn($request);
+
+        return $requestMock;
+    }
+
+    private function getFindByIdQueryBuilderMock($id, $willReturn = []) {
         $queryBuilderMock = $this->createMock(Builder::class);
+        $queryBuilderMock->expects($this->once())
+            ->method('find')
+            ->with($id)
+            ->willReturn($willReturn);
+
+        return $queryBuilderMock;
+    }
+
+    public function test_index_page() {
+        $queryBuilderMock = $this->createMock(WonderBuilder::class);
+
         $queryBuilderMock
             ->expects($this->once())
-            ->method('get');
+            ->method('getThisWonder');
 
         $this->getProductController($queryBuilderMock)->index();
     }
@@ -35,11 +54,7 @@ class ProductControllerTest extends TestCase
     public function test_show_page() {
         $id = 2;
 
-        $queryBuilderMock = $this->createMock(Builder::class);
-        $queryBuilderMock
-            ->expects($this->once())
-            ->method('find')
-            ->with($id);
+        $queryBuilderMock = $this->getFindByIdQueryBuilderMock($id);
 
         $this->getProductController($queryBuilderMock)->show($id);
     }
@@ -50,8 +65,7 @@ class ProductControllerTest extends TestCase
             'price' => 200
         ];
 
-        $requestMock = $this->createMock(Request::class);
-        $requestMock->expects($this->once())->method('all')->willReturn($request);
+        $requestMock = $this->getRequestMock($request);
 
         $queryBuilderMock = $this->createMock(Builder::class);
         $queryBuilderMock
@@ -69,8 +83,7 @@ class ProductControllerTest extends TestCase
             'price' => 100
         ];
 
-        $requestMock = $this->createMock(Request::class);
-        $requestMock->expects($this->once())->method('all')->willReturn($request);
+        $requestMock = $this->getRequestMock($request);
 
         $productMock = $this->createMock(Product::class);
         $productMock
@@ -78,13 +91,7 @@ class ProductControllerTest extends TestCase
             ->method('update')
             ->with($request);
 
-        $queryBuilderMock = $this->createMock(Builder::class);
-        $queryBuilderMock
-            ->expects($this->once())
-            ->method('find')
-            ->with($id)
-            ->willReturn($productMock);
-
+        $queryBuilderMock = $this->getFindByIdQueryBuilderMock($id, $productMock);
 
 
         $this->getProductController($queryBuilderMock)->update($requestMock, $id);
@@ -98,13 +105,7 @@ class ProductControllerTest extends TestCase
             ->expects($this->once())
             ->method('delete');
 
-        $queryBuilderMock = $this->createMock(Builder::class);
-        $queryBuilderMock
-            ->expects($this->once())
-            ->method('find')
-            ->with($id)
-            ->willReturn($productMock);
-
+        $queryBuilderMock = $this->getFindByIdQueryBuilderMock($id, $productMock);
 
         $this->getProductController($queryBuilderMock)->destroy($id);
     }

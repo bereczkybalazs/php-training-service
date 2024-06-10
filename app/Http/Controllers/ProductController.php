@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return $this->product->newQuery()->get();
+        return $this->product->newQuery()->getThisWonder();
     }
 
     /**
