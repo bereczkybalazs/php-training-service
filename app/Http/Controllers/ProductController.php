@@ -32,7 +32,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->product->newQuery()->create($request->all());
     }
 
     /**
@@ -56,7 +56,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $this->product->newQuery()->find($id)->update($request->all());
     }
 
     /**
@@ -64,6 +64,6 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $this->product->newQuery()->find($id)->delete();
     }
 }
