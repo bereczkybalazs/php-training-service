@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function __construct(protected Product $product, protected User $user) {
+    public function __construct(protected Product $product, protected User $user, protected ProductRepository $productRepository) {
     }
 
     /**
@@ -40,7 +41,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        return $this->product->newQuery()->find($id);
+        //return $this->product->newQuery()->find($id);
+        return $this->productRepository->findById($id);
     }
 
     /**

@@ -6,6 +6,7 @@ use App\Builders\WonderBuilder;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use App\Models\User;
+use App\Repositories\ProductRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
@@ -54,9 +55,25 @@ class ProductControllerTest extends TestCase
     public function test_show_page() {
         $id = 2;
 
-        $queryBuilderMock = $this->getFindByIdQueryBuilderMock($id);
+        //$queryBuilderMock = $this->getFindByIdQueryBuilderMock($id);
+        //$queryBuilderMock = $this->createMock(Builder::class);
 
-        $this->getProductController($queryBuilderMock)->show($id);
+        $productMock = $this->createMock(Product::class);
+        $userMock = $this->createMock(User::class);
+        $productRepositoryMock = $this->createMock(ProductRepository::class);
+
+        $productRepositoryMock->expects($this->once())->method('findById')->with($id);
+
+        $productController = new ProductController($productMock, $userMock, $productRepositoryMock);
+        $productController->show($id);
+
+
+//        $productRepositoryMock->expects($this->once())
+//            ->method('find')
+//            ->with($id)
+//            ->willReturn($queryBuilderMock);
+
+        // $this->getProductController($queryBuilderMock)->show($id);
     }
 
     public function test_store() {
