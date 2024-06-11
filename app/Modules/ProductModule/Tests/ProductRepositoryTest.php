@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Integration\Repository;
+namespace App\Modules\ProductModule\Tests;
 
 use App\Models\Product;
-use App\Repositories\ProductRepository;
+use App\Modules\ProductModule\ProductRepository;
 use Illuminate\Database\Query\Builder;
 use PHPUnit\Framework\TestCase;
 

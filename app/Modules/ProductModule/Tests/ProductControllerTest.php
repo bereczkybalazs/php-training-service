@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Integration\Controller;
+namespace App\Modules\ProductModule\Tests;
 
 use App\Builders\WonderBuilder;
-use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use App\Models\User;
-use App\Repositories\ProductRepository;
+use App\Modules\ProductModule\ProductController;
+use App\Modules\ProductModule\ProductRepository;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
@@ -21,8 +21,9 @@ class ProductControllerTest extends TestCase
             ->method('newQuery')
             ->willReturn($builder);
 
+        $productRepositoryMock = $this->createMock(ProductRepository::class);
         $userMock = $this->createMock(User::class);
-        return new ProductController($productMock, $userMock);
+        return new ProductController($productMock, $userMock, $productRepositoryMock);
     }
 
     private function getRequestMock($request){

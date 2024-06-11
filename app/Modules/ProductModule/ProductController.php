@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\ProductModule;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\User;
-use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
