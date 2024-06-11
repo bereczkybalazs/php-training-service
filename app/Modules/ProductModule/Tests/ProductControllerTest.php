@@ -2,12 +2,12 @@
 
 namespace App\Modules\ProductModule\Tests;
 
-use App\Builders\WonderBuilder;
 use App\Models\Product;
 use App\Models\User;
+use App\Modules\ProductModule\Handlers\TopFiveChickenWithAllProductsHandler;
+use App\Modules\ProductModule\Handlers\TopFiveChickenWithAllProductsHandlerInterface;
 use App\Modules\ProductModule\ProductController;
 use App\Modules\ProductModule\Repositories\ProductRepositoryInterface;
-use App\Modules\ProductModule\TopFiveChickenWithAllProductsHandler;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
@@ -23,7 +23,7 @@ class ProductControllerTest extends TestCase
             ->willReturn($builder);
 
         $productRepositoryMock = $this->createMock(ProductRepositoryInterface::class);
-        $topFiveChickenWithAllProductsHandlerMock = $this->createMock(TopFiveChickenWithAllProductsHandler::class);
+        $topFiveChickenWithAllProductsHandlerMock = $this->createMock(TopFiveChickenWithAllProductsHandlerInterface::class);
         $userMock = $this->createMock(User::class);
         return new ProductController($productMock, $userMock, $productRepositoryMock, $topFiveChickenWithAllProductsHandlerMock);
     }

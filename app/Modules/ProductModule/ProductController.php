@@ -5,7 +5,7 @@ namespace App\Modules\ProductModule;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\User;
-use App\Modules\ProductModule\Repositories\ProductRepository;
+use App\Modules\ProductModule\Handlers\TopFiveChickenWithAllProductsHandlerInterface;
 use App\Modules\ProductModule\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
@@ -15,7 +15,7 @@ class ProductController extends Controller
         protected Product $product,
         protected User $user,
         protected ProductRepositoryInterface $productRepository,
-        protected TopFiveChickenWithAllProductsHandler $topFiveChickenWithAllProductsHandler
+        protected TopFiveChickenWithAllProductsHandlerInterface $topFiveChickenWithAllProductsHandler
     ) {
     }
 

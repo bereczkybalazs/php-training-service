@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Modules\ProductModule\Tests;
+namespace App\Modules\ProductModule\Transformers\Tests;
 
 
-use App\Modules\ProductModule\TopFiveChickenWithNameIdTransformer;
+use App\Modules\ProductModule\Transformers\TopFiveChickenWithNameIdTransformer;
 use PHPUnit\Framework\TestCase;
 
 class TopFiveChickenWithNameIdTransformerTest extends TestCase
