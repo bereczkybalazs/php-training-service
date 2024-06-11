@@ -5,6 +5,8 @@ namespace App\Modules\ProductModule;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\User;
+use App\Modules\ProductModule\Repositories\ProductRepository;
+use App\Modules\ProductModule\Repositories\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,7 +14,7 @@ class ProductController extends Controller
     public function __construct(
         protected Product $product,
         protected User $user,
-        protected ProductRepository $productRepository,
+        protected ProductRepositoryInterface $productRepository,
         protected TopFiveChickenWithAllProductsHandler $topFiveChickenWithAllProductsHandler
     ) {
     }

@@ -2,9 +2,11 @@
 
 namespace App\Modules\ProductModule;
 
+use App\Modules\ProductModule\Repositories\ProductRepositoryInterface;
+
 class TopFiveChickenWithAllProductsHandler
 {
-    public function __construct(private ProductRepository $productRepository, private TopFiveChickenWithNameIdTransformer $topFiveChickenWithNameIdTransformer) {}
+    public function __construct(private ProductRepositoryInterface $productRepository, private TopFiveChickenWithNameIdTransformer $topFiveChickenWithNameIdTransformer) {}
     public function handle()  {
         $topFiveChicken = $this->productRepository->getTopFiveChicken();
         $products = $this->productRepository->getAllProducts();

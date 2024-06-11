@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\ProductModule;
+namespace App\Modules\ProductModule\Repositories;
 
 use App\Models\Product;
 
-class ProductRepository {
+class ChickenProductRepository implements ProductRepositoryInterface {
 
     public function __construct(protected Product $product) {}
     public function findById($id){

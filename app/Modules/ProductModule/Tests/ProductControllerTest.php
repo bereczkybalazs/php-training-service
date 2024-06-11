@@ -6,7 +6,8 @@ use App\Builders\WonderBuilder;
 use App\Models\Product;
 use App\Models\User;
 use App\Modules\ProductModule\ProductController;
-use App\Modules\ProductModule\ProductRepository;
+use App\Modules\ProductModule\Repositories\ProductRepositoryInterface;
+use App\Modules\ProductModule\TopFiveChickenWithAllProductsHandler;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use PHPUnit\Framework\TestCase;
@@ -21,9 +22,10 @@ class ProductControllerTest extends TestCase
             ->method('newQuery')
             ->willReturn($builder);
 
-        $productRepositoryMock = $this->createMock(ProductRepository::class);
+        $productRepositoryMock = $this->createMock(ProductRepositoryInterface::class);
+        $topFiveChickenWithAllProductsHandlerMock = $this->createMock(TopFiveChickenWithAllProductsHandler::class);
         $userMock = $this->createMock(User::class);
-        return new ProductController($productMock, $userMock, $productRepositoryMock);
+        return new ProductController($productMock, $userMock, $productRepositoryMock, $topFiveChickenWithAllProductsHandlerMock);
     }
 
     private function getRequestMock($request){
@@ -44,13 +46,16 @@ class ProductControllerTest extends TestCase
     }
 
     public function test_index_page() {
-        $queryBuilderMock = $this->createMock(WonderBuilder::class);
+        $productMock = $this->createMock(Product::class);
+        $userMock = $this->createMock(User::class);
+        $productRepositoryMock = $this->createMock(ProductRepositoryInterface::class);
+        $topFiveChickenWithAllProductsHandlerMock = $this->createMock(TopFiveChickenWithAllProductsHandler::class);
 
-        $queryBuilderMock
-            ->expects($this->once())
-            ->method('getThisWonder');
 
-        $this->getProductController($queryBuilderMock)->index();
+        $topFiveChickenWithAllProductsHandlerMock->expects($this->once())->method('handle');
+
+        $productController = new ProductController($productMock, $userMock, $productRepositoryMock, $topFiveChickenWithAllProductsHandlerMock);
+        $productController->index();
     }
 
     public function test_show_page() {
@@ -61,11 +66,13 @@ class ProductControllerTest extends TestCase
 
         $productMock = $this->createMock(Product::class);
         $userMock = $this->createMock(User::class);
-        $productRepositoryMock = $this->createMock(ProductRepository::class);
+        $productRepositoryMock = $this->createMock(ProductRepositoryInterface::class);
+        $topFiveChickenWithAllProductsHandlerMock = $this->createMock(TopFiveChickenWithAllProductsHandler::class);
+
 
         $productRepositoryMock->expects($this->once())->method('findById')->with($id);
 
-        $productController = new ProductController($productMock, $userMock, $productRepositoryMock);
+        $productController = new ProductController($productMock, $userMock, $productRepositoryMock, $topFiveChickenWithAllProductsHandlerMock);
         $productController->show($id);
 
 
