@@ -9,7 +9,12 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function __construct(protected Product $product, protected User $user, protected ProductRepository $productRepository) {
+    public function __construct(
+        protected Product $product,
+        protected User $user,
+        protected ProductRepository $productRepository,
+        protected TopFiveChickenWithAllProductsHandler $topFiveChickenWithAllProductsHandler
+    ) {
     }
 
     /**
@@ -17,7 +22,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return $this->product->newQuery()->getThisWonder();
+        // product
+        // user
+        // product -> top 5, name === 'chicken'
+        //return $this->product->newQuery()->getThisWonder();
+        return $this->topFiveChickenWithAllProductsHandler->handle();
     }
 
     /**

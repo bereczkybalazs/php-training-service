@@ -10,4 +10,12 @@ class ProductRepository {
     public function findById($id){
         return $this->product->newQuery()->find($id);
     }
+
+    public function getTopFiveChicken() {
+        return $this->product->newQuery()->where('name', '=', 'chicken')->limit(5)->get();
+    }
+
+    public function getAllProducts() {
+        return $this->product->newQuery()->all();
+    }
 }
